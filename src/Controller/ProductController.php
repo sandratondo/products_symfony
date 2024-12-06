@@ -53,31 +53,50 @@ class ProductController extends AbstractController
         ]);
     }
 
-        // Ruta y método para editar un producto
-        #[Route('/product/edit/{id}', name: 'app_product_edit')]
-        public function edit($id, Request $request, EntityManagerInterface $em): Response
-        {
-            // Buscar el producto por ID
-            $product = $em->getRepository(Product::class)->find($id);
-    
-            if (!$product) {
-                throw $this->createNotFoundException('Producto no encontrado');
-            }
-    
-            // Crear el formulario de edición
-            $form = $this->createForm(ProductType::class, $product);
-            $form->handleRequest($request);
-    
-            // Si el formulario es válido, guardar los cambios
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em->flush();
-                return $this->redirectToRoute('app_product_list');
-            }
-    
-            // Renderizar el formulario de edición
-            return $this->render('product/edit.html.twig', [
-                'form' => $form->createView(),
-                'product' => $product,
-            ]);
+    // Ruta y método para editar un producto
+    #[Route('/product/edit/{id}', name: 'app_product_edit')]
+    public function edit($id, Request $request, EntityManagerInterface $em): Response
+    {
+        // Buscar el producto por ID
+        $product = $em->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException('Producto no encontrado');
         }
+
+        // Crear el formulario de edición
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        // Si el formulario es válido, guardar los cambios
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('app_product_list');
+        }
+
+        // Renderizar el formulario de edición
+        return $this->render('product/edit.html.twig', [
+            'form' => $form->createView(),
+            'product' => $product,
+        ]);
+    }
+
+    #[Route('/product/delete/{id}', name: 'app_product_delete', methods: ['POST', 'DELETE'])]
+    public function delete($id, EntityManagerInterface $em): Response
+    {
+        // Buscar el producto por ID
+        $product = $em->getRepository(Product::class)->find($id);
+    
+        if (!$product) {
+            throw $this->createNotFoundException('Producto no encontrado');
+        }
+    
+        // Eliminar el producto de la base de datos
+        $em->remove($product);
+        $em->flush();
+    
+        // Redirigir a la lista de productos
+        return $this->redirectToRoute('app_product_list');
+    }
+        
 }
