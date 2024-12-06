@@ -12,91 +12,128 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    //Logica para crear productos
+    /**
+     * Crear un nuevo producto.
+     * Este método permite al usuario crear un producto utilizando un formulario.
+     * Si el formulario es válido, guarda el producto en la base de datos y muestra un mensaje de éxito.
+     */
     #[Route('/product/create', name: 'app_product_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
         // Crear un nuevo producto vacío
         $product = new Product();
 
-        // Crear el formulario
+        // Crear el formulario asociado al producto
         $form = $this->createForm(ProductType::class, $product);
 
-        // Manejar la solicitud (si es un POST, procesar el formulario)
+        // Manejar la solicitud del formulario
         $form->handleRequest($request);
 
         // Si el formulario es válido, guardar el producto
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($product);
-            $em->flush(); //Guarda el producto bd si el formulario es válido
+            try {
+                $em->persist($product); // Persistir el producto en Doctrine
+                $em->flush(); // Guardar los cambios en la base de datos
 
-            // Redirigir a la lista de productos (en este caso lo redirigimos a la misma página)
-            return $this->redirectToRoute('app_product_list');
+                // Agregar un mensaje flash de éxito
+                $this->addFlash('success', '¡El producto se ha creado correctamente!');
+                
+                // Redirigir a la lista de productos
+                return $this->redirectToRoute('app_product_list');
+            } catch (\Exception $e) {
+                // Agregar un mensaje flash de error si ocurre algún problema
+                $this->addFlash('error', 'Hubo un error al crear el producto. Inténtalo de nuevo.');
+            }
         }
 
-        // Renderizar la plantilla con el formulario
+        // Renderizar la plantilla del formulario de creación
         return $this->render('product/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    //se listan productos en este metodo
+    /**
+     * Listar todos los productos.
+     * Este método recupera todos los productos de la base de datos y los muestra en una vista de tabla.
+     */
     #[Route('/product', name: 'app_product_list')]
     public function list(EntityManagerInterface $em): Response
     {
-        // Obtener todos los productos de la base de datos
+        // Recuperar todos los productos de la base de datos
         $products = $em->getRepository(Product::class)->findAll();
 
-        // Renderizar la vista de productos
+        // Renderizar la vista de la lista de productos
         return $this->render('product/list.html.twig', [
             'products' => $products,
         ]);
     }
 
-    // Ruta y método para editar un producto
+    // editar un producto utilizando un formulario.
     #[Route('/product/edit/{id}', name: 'app_product_edit')]
     public function edit($id, Request $request, EntityManagerInterface $em): Response
     {
-        // Buscar el producto por ID
+        // Buscar el producto por su ID
         $product = $em->getRepository(Product::class)->find($id);
 
+        // Si el producto no existe, agregar un mensaje flash de error y redirigir
         if (!$product) {
-            throw $this->createNotFoundException('Producto no encontrado');
+            $this->addFlash('error', '¡El producto no existe!');
+            return $this->redirectToRoute('app_product_list');
         }
 
-        // Crear el formulario de edición
+        // Crear el formulario asociado al producto
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         // Si el formulario es válido, guardar los cambios
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            return $this->redirectToRoute('app_product_list');
+            try {
+                $em->flush(); // Guardar los cambios en la base de datos
+
+                // Agregar un mensaje flash de éxito
+                $this->addFlash('success', '¡El producto se ha actualizado correctamente!');
+                
+                // Redirigir a la lista de productos
+                return $this->redirectToRoute('app_product_list');
+            } catch (\Exception $e) {
+                // Agregar un mensaje flash de error si ocurre algún problema
+                $this->addFlash('error', 'Hubo un error al actualizar el producto. Inténtalo de nuevo.');
+            }
         }
 
-        // Renderizar el formulario de edición
+        // Renderizar la plantilla del formulario de edición
         return $this->render('product/edit.html.twig', [
             'form' => $form->createView(),
             'product' => $product,
         ]);
     }
 
+    // método para Eliminar un producto.
     #[Route('/product/delete/{id}', name: 'app_product_delete', methods: ['POST', 'DELETE'])]
     public function delete($id, EntityManagerInterface $em): Response
     {
-        // Buscar el producto por ID
+        // Buscar el producto por su ID
         $product = $em->getRepository(Product::class)->find($id);
-    
+
+        // Si el producto no existe, agregar un mensaje flash de error y redirigir
         if (!$product) {
-            throw $this->createNotFoundException('Producto no encontrado');
+            $this->addFlash('error', '¡El producto no existe!');
+            return $this->redirectToRoute('app_product_list');
         }
-    
-        // Eliminar el producto de la base de datos
-        $em->remove($product);
-        $em->flush();
-    
+
+        try {
+            // Eliminar el producto de la base de datos
+            $em->remove($product);
+            $em->flush();
+
+            // Agregar un mensaje flash de éxito
+            $this->addFlash('success', '¡El producto se ha eliminado correctamente!');
+        } catch (\Exception $e) {
+            // Agregar un mensaje flash de error si ocurre algún problema
+            $this->addFlash('error', 'Hubo un error al eliminar el producto. Inténtalo de nuevo.');
+        }
+
         // Redirigir a la lista de productos
         return $this->redirectToRoute('app_product_list');
     }
-        
 }
