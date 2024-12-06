@@ -12,16 +12,24 @@
         {% endblock %}
     </head>
     <body>
-                <!-- Mostrar mensajes flash -->
+        <!-- Mostrar mensajes flash -->
         {% for label, messages in app.flashes %}
-            <div class="alert alert-{{ label }}">
+            <div class="alert alert-{{ label }}" role="alert">
                 {% for message in messages %}
                     <p>{{ message }}</p>
                 {% endfor %}
             </div>
         {% endfor %}
-        
-        {% block body %}
-        {% endblock %}
+
+        {% block body %}{% endblock %}
+
+        <!-- Script para ocultar mensajes flash -->
+        <script>
+            // Espera 7 segundos y luego elimina los mensajes flash
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => alert.style.display = 'none');
+            }, 7000);
+        </script>
     </body>
 </html>

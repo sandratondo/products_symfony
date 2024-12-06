@@ -12,11 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-    /**
-     * Crear un nuevo producto.
-     * Este método permite al usuario crear un producto utilizando un formulario.
-     * Si el formulario es válido, guarda el producto en la base de datos y muestra un mensaje de éxito.
-     */
+    // Crear un nuevo producto.
+     
     #[Route('/product/create', name: 'app_product_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -38,10 +35,8 @@ class ProductController extends AbstractController
                 // Agregar un mensaje flash de éxito
                 $this->addFlash('success', '¡El producto se ha creado correctamente!');
                 
-                // Redirigir a la lista de productos
                 return $this->redirectToRoute('app_product_list');
             } catch (\Exception $e) {
-                // Agregar un mensaje flash de error si ocurre algún problema
                 $this->addFlash('error', 'Hubo un error al crear el producto. Inténtalo de nuevo.');
             }
         }
@@ -52,10 +47,8 @@ class ProductController extends AbstractController
         ]);
     }
 
-    /**
-     * Listar todos los productos.
-     * Este método recupera todos los productos de la base de datos y los muestra en una vista de tabla.
-     */
+    //Listar todos los productos
+  
     #[Route('/product', name: 'app_product_list')]
     public function list(EntityManagerInterface $em): Response
     {
@@ -93,10 +86,8 @@ class ProductController extends AbstractController
                 // Agregar un mensaje flash de éxito
                 $this->addFlash('success', '¡El producto se ha actualizado correctamente!');
                 
-                // Redirigir a la lista de productos
                 return $this->redirectToRoute('app_product_list');
             } catch (\Exception $e) {
-                // Agregar un mensaje flash de error si ocurre algún problema
                 $this->addFlash('error', 'Hubo un error al actualizar el producto. Inténtalo de nuevo.');
             }
         }
@@ -126,14 +117,11 @@ class ProductController extends AbstractController
             $em->remove($product);
             $em->flush();
 
-            // Agregar un mensaje flash de éxito
             $this->addFlash('success', '¡El producto se ha eliminado correctamente!');
         } catch (\Exception $e) {
-            // Agregar un mensaje flash de error si ocurre algún problema
             $this->addFlash('error', 'Hubo un error al eliminar el producto. Inténtalo de nuevo.');
         }
 
-        // Redirigir a la lista de productos
         return $this->redirectToRoute('app_product_list');
     }
 }
