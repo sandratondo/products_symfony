@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Product{% endblock %}
+
+{% block body %}
+<h1>Create a New Product</h1>
+
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.stock) }}
+    {# El formulario ya contiene un botón de tipo submit en PRODUCTYPE #}
+{{ form_end(form) }}
+
+{% endblock %}
