@@ -1,3 +1,147 @@
 body {
-    background-color: skyblue;
+    background-color: rgb(247, 248, 248);
+    font-family: Arial, sans-serif;
+}
+
+
+/* Contenedor principal */
+.container {
+    position:relative;
+    transform: translateX(-50%);
+    left:50%;
+    max-width: 800px;
+    margin: 3em 0em;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+.my-alert {
+    padding: .5em; 
+    max-width: 90%;
+    position: relative;
+    margin: 2em 0em;
+    transform: translateX(-50%);
+    left:50%;
+}
+
+/* Título */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #303030;
+}
+
+/* Botones */
+.btn-secondary {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #555;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos de los formularios */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #616161;
+}
+
+/* Estilo de los campos de formulario */
+.form-control {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 8px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Estilos de error */
+.form-group .invalid-feedback {
+    color: #e74c3c;
+    font-size: 0.9rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.gray-link {
+    color: gray; /* Adjust the color as needed */
+    text-decoration: none; /* Remove default underline */
+    text-decoration: underline;
+  }
+  .btn-create {
+    background-color: #ddd; /* Color de fondo oscuro */
+    color: #555; 
+    border-radius: 100%;
+    padding: .5em 1em;
+    box-shadow: 1px 1px 2px #ccc;
+    position: relative;
+
+  }
+.btn-save {
+    background-color: #333; /* Color de fondo oscuro */
+    color: white; /* Texto blanco */
+    display: flex;
+    margin: 0 auto;
+    padding: 15px 50px; /* Espaciado */
+    font-size: 1rem; /* Tamaño de fuente */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    text-align: center; /* Centrado de texto */
+    cursor: pointer; /* Cambia el cursor a puntero */
+    transition: all 0.3s ease; /* Transición suave */
+    width: auto; /* Ajusta el tamaño automáticamente */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
 }

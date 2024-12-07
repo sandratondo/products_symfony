@@ -18,20 +18,33 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Product Name', //Para el nombre del producto
+                'label' => 'Nombre', //Para el nombre del producto
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Product Description', //descripción del producto 
+                'label' => 'Descripción', //descripción del producto 
             ])
             ->add('price', NumberType::class, [
-                'label' => 'Product Price',
+                'label' => 'Precio',
                 'scale' => 2, // asi tiene dos decimales
+                'attr' => [
+                    'placeholder' => 'Añadir precio',
+                    'step' => '0.01', // Permite decimales
+                    'min' => '0',    // Prohíbe valores negativos
+                ],
             ])
             ->add('stock', NumberType::class, [
-                'label' => 'Product Stock', //cantidad de stock del producto
+                'label' => 'Stock', //cantidad de stock del producto
+                'attr' => [
+                    'placeholder' => 'Añadir stock',
+                    'step' => '1',  // Solo números enteros
+                    'min' => '0',   // No negativos
+                ],
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Save Product', // Un botón para guardar el producto
+                'label' => 'Guardar producto', // Un botón para guardar el producto
+                'attr' => [
+                    'class' => 'btn-save', // Clase personalizada para el botón
+                ],
             ]);
     }
 

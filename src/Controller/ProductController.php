@@ -32,7 +32,6 @@ class ProductController extends AbstractController
                 $em->persist($product); // Persistir el producto en Doctrine
                 $em->flush(); // Guardar los cambios en la base de datos
 
-                // Agregar un mensaje flash de éxito
                 $this->addFlash('success', '¡El producto se ha creado correctamente!');
                 
                 return $this->redirectToRoute('app_product_list');
