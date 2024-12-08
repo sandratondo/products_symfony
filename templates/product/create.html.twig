@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create Product{% endblock %}
+{% block title %}Crear Producto{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -8,24 +8,32 @@
         <h1 class="text-center mb-4">Crear producto</h1>
 
         {{ form_start(form, { 'attr': { 'data-turbo': 'false' } }) }}
+
+            <!-- Nombre del producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Enter product name'}}) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Introduce producto'}}) }}
                 {{ form_errors(form.name) }}
             </div>
+
+            <!-- descripcion producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter product description'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Introduce descripción'}}) }}
                 {{ form_errors(form.description) }}
             </div>
+
+            <!-- precio del producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.price, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Enter product price'}}) }}
+                {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Introduce precio'}}) }}
                 {{ form_errors(form.price) }}
             </div>
+
+            <!-- stock producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.stock, null, {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.stock, {'attr': {'class': 'form-control', 'placeholder': 'Enter product stock quantity'}}) }}
+                {{ form_widget(form.stock, {'attr': {'class': 'form-control', 'placeholder': 'Cantidad stock'}}) }}
                 {{ form_errors(form.stock) }}
             </div>
         {{ form_end(form) }}

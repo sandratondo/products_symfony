@@ -14,7 +14,7 @@ describe('Product Management', () => {
   
       // Verificar que el producto se haya creado correctamente
       cy.url().should('include', '/product'); // Redirigir a la lista de productos
-      cy.contains('New Product').should('exist'); // Verificar que el nombre del producto esté presente en la lista
+      cy.contains('New Product').should('exist'); // Verificar que el nombre del producto esté  en la lista
     });
   
     // Prueba de edición de producto
@@ -32,11 +32,11 @@ describe('Product Management', () => {
       cy.get('textarea[name="product[description]"]').clear().type('This is an updated product.'); // Actualizar descripción
       cy.get('input[name="product[stock]"]').clear().type('15'); // Actualizar stock
       
-      cy.get('button[type="submit"]').click(); // Enviar el formulario de edición
+      cy.get('button[type="submit"]').click(); // Enviar el formulario 
   
       // Verificar que el producto se haya actualizado
       cy.url().should('include', '/product'); // Redirigir a la lista de productos
-      cy.contains('Updated Product').should('exist'); // Verificar que el nombre actualizado esté presente en la lista
+      cy.contains('Updated Product').should('exist'); // Verificar que el nombre actualizado esté  en la lista
     });
   
 

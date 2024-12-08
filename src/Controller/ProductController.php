@@ -102,7 +102,7 @@ class ProductController extends AbstractController
     #[Route('/product/delete/{id}', name: 'app_product_delete', methods: ['POST', 'DELETE'])]
     public function delete($id, EntityManagerInterface $em): Response
     {
-        // Buscar el producto por su ID
+        // Buscar el producto ID
         $product = $em->getRepository(Product::class)->find($id);
 
         // Si el producto no existe, agregar un mensaje flash de error y redirigir
