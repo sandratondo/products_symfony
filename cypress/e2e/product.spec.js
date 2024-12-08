@@ -1,21 +1,45 @@
-describe('Product Creation', () => {
-    it('loads the product creation page', () => {
-      cy.visit('/product/create'); // Abre la URL de creación de producto
-      cy.get('form').should('exist'); // Verifica que el formulario esté presente
-    });
-  
+describe('Product Management', () => {
+
+    // Prueba de creación de producto
     it('creates a product successfully', () => {
-      cy.visit('/product/create');
-      cy.get('input[name="product[name]"]').type('New Product'); // Completa el nombre
-      cy.get('input[name="product[price]"]').type('99.99'); // Completa el precio
-      cy.get('textarea[name="product[description]"]').type('This is a test product.'); // Completa la descripción
-      cy.get('input[name="product[stock]"]').type('10');
+      cy.visit('/product/create'); // Navega a la página de creación de producto
       
-      cy.get('button[type="submit"]').click(); // Envía el formulario
+      // Rellenar el formulario de creación de producto
+      cy.get('input[name="product[name]"]').type('New Product'); // Nombre del producto
+      cy.get('input[name="product[price]"]').type('99.99'); // Precio del producto
+      cy.get('textarea[name="product[description]"]').type('This is a test product.'); // Descripción
+      cy.get('input[name="product[stock]"]').type('10'); // Stock
+      
+      cy.get('button[type="submit"]').click(); // Enviar el formulario de creación
   
-      // Verifica que el producto se haya creado correctamente
-      cy.url().should('include', '/product'); // Redirige a la página de productos
-      cy.contains('New Product').should('exist'); // Verifica que el producto se muestra
+      // Verificar que el producto se haya creado correctamente
+      cy.url().should('include', '/product'); // Redirigir a la lista de productos
+      cy.contains('New Product').should('exist'); // Verificar que el nombre del producto esté presente en la lista
     });
+  
+    // Prueba de edición de producto
+    it('edits an existing product successfully', () => {
+      // Primero, asegurémonos de que el producto está en la lista
+      cy.visit('/product');
+      cy.contains('New Product') // Asegurarse de que "New Product" esté en la lista
+        .parent()
+        .find('a') // Encuentra el botón de editar (link)
+        .click(); // Haz clic en el botón de editar
+  
+      // En la página de edición, modifica los campos
+      cy.get('input[name="product[name]"]').clear().type('Updated Product'); // Actualizar nombre
+      cy.get('input[name="product[price]"]').clear().type('129.99'); // Actualizar precio
+      cy.get('textarea[name="product[description]"]').clear().type('This is an updated product.'); // Actualizar descripción
+      cy.get('input[name="product[stock]"]').clear().type('15'); // Actualizar stock
+      
+      cy.get('button[type="submit"]').click(); // Enviar el formulario de edición
+  
+      // Verificar que el producto se haya actualizado
+      cy.url().should('include', '/product'); // Redirigir a la lista de productos
+      cy.contains('Updated Product').should('exist'); // Verificar que el nombre actualizado esté presente en la lista
+    });
+  
+
+  
   });
   
