@@ -43,6 +43,71 @@ class ProductRepositoryTest extends KernelTestCase
         $this->assertSame(10, $productFromDb->getStock());
     }
 
+
+
+    public function testProductRepositoryCanEditProduct(): void
+    {
+        // Crear y persistir un producto
+        $product = new Product();
+        $product->setName('Product to Edit');
+        $product->setDescription('Original description.');
+        $product->setPrice(19.99);
+        $product->setStock(15);
+        $this->entityManager->persist($product);
+        $this->entityManager->flush();
+
+        // Recuperar el producto
+        $productFromDb = $this->entityManager
+            ->getRepository(Product::class)
+            ->findOneBy(['name' => 'Product to Edit']);
+
+        // Asegurarse de que el producto existe
+        $this->assertNotNull($productFromDb);
+
+        // Editar el producto
+        $productFromDb->setName('Updated Product');
+        $productFromDb->setDescription('Updated description.');
+        $productFromDb->setPrice(29.99);
+        $productFromDb->setStock(25);
+        $this->entityManager->flush(); // Guardar los cambios en la base de datos
+
+        // Recuperar el producto editado
+        $updatedProduct = $this->entityManager
+            ->getRepository(Product::class)
+            ->findOneBy(['name' => 'Updated Product']);
+
+        // Verificar que los cambios se reflejan
+        $this->assertNotNull($updatedProduct);
+        $this->assertSame('Updated Product', $updatedProduct->getName());
+        $this->assertSame('Updated description.', $updatedProduct->getDescription());
+        $this->assertSame(29.99, $updatedProduct->getPrice());
+        $this->assertSame(25, $updatedProduct->getStock());
+    }
+
+    public function testProductRepositoryCanDeleteProduct(): void
+    {
+        // Crear y persistir el producto
+        $product = new Product();
+        $product->setName('Test Product for Deletion');
+        $product->setDescription('This product will be deleted.');
+        $product->setPrice(49.99);
+        $product->setStock(5);
+        $this->entityManager->persist($product);
+        $this->entityManager->flush();
+
+        // Eliminar el producto de la base de datos
+        $this->entityManager->remove($product);
+        $this->entityManager->flush();
+
+        // Intentar recuperar el producto eliminado
+        $deletedProduct = $this->entityManager
+            ->getRepository(Product::class)
+            ->findOneBy(['name' => 'Test Product for Deletion']);
+
+        // Asegurarse de que el producto ya no existe
+        $this->assertNull($deletedProduct);
+    }
+
     //limpiar recursos despues de cada prueba
     protected function tearDown(): void
     {
