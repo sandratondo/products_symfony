@@ -1,17 +1,10 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
+
 <div class="container mt-5">
     <a href="{{ path('app_product_list') }}" class="gray-link my-3">Volver</a>
     <h1  class="text-center mb-4">Editar Producto</h1>
-
-    <!-- Mensajes Flash -->
-    {% for label, messages in app.flashes %}
-        <div class="alert alert-{{ label }} mt-3">
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        </div>
-    {% endfor %}
 
     <!-- Formulario -->
     {{ form_start(form, { 'attr': { 'data-turbo': 'false' } }) }}

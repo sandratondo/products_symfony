@@ -13,28 +13,28 @@
             <div class="form-group mb-4">
                 {{ form_label(form.name, null, {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Introduce producto'}}) }}
-                {{ form_errors(form.name) }}
+                <div class="text-danger">{{ form_errors(form.name) }}</div>
             </div>
 
             <!-- descripcion producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Introduce descripción'}}) }}
-                {{ form_errors(form.description) }}
+                <div class="text-danger">{{ form_errors(form.description) }}</div>
             </div>
 
             <!-- precio del producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.price, null, {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.price, {'attr': {'class': 'form-control', 'placeholder': 'Introduce precio'}}) }}
-                {{ form_errors(form.price) }}
+                <div class="text-danger">{{ form_errors(form.price) }}</div>
             </div>
 
             <!-- stock producto -->
             <div class="form-group mb-4">
                 {{ form_label(form.stock, null, {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.stock, {'attr': {'class': 'form-control', 'placeholder': 'Cantidad stock'}}) }}
-                {{ form_errors(form.stock) }}
+                <div class="text-danger">{{ form_errors(form.stock) }}</div>
             </div>
         {{ form_end(form) }}
     </div>
